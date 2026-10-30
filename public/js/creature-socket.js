@@ -23,5 +23,4 @@
     console.log("pet has been trained with using " + playItem + ", gaining " + increasedTrainedStat)
   })
 
-
 })();

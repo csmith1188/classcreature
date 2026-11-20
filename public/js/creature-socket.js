@@ -3,23 +3,42 @@
   if (!window.io) {
     return;
   }
-  const socket = window.io('/', { transports: ['websocket'] });
+  socket = window.io('/', { transports: ['websocket'] });
 
+  socket.on('connect', function () {
+    socket.emit('ping', { message: 'hello' });
+  });
   socket.on('pong', function (payload) {
     console.info('pong', payload);
   });
 
+  //might put under a useItem later, but for now just testing the socket 
 
-  //might put under use item to sort it
-  socket.on('feed', function (feed) {
-    console.log("pet has been feed " + foodItem)
+  //feed
+  
+
+  socket.on('feed', function (payload) {
+    console.log(payload.petId, " has been feed: ", payload.itemName);
   })
 
-  socket.on('play', function (play) {
+  /* play
+  function play(itemName, itemValue, petId) {
+    socket.emit('play', {
+      item: itemName,
+      itemValue: itemValue,
+      petId: petId
+    });
+    time_stats.happiness = Math.min(100, time_stats.happiness + itemValue);
+    time_stats.entertainment = Math.min(100, time_stats.entertainment + itemValue);
+  } */
+
+  socket.on('play', function (payload) {
     console.log("pet has been played with using " + playItem)
   })
 
-  socket.on('play', function (train) {
+
+  //train stats
+  socket.on('train', function (payload) {
     console.log("pet has been trained with using " + playItem + ", gaining " + increasedTrainedStat)
   })
 
